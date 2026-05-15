@@ -1,5 +1,6 @@
 package com.veteroch4k.crm.models;
 
+import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,24 +23,32 @@ import org.hibernate.annotations.CurrentTimestamp;
 @NoArgsConstructor
 @Entity
 @Table(name = "transaction")
+@Schema(description = "Транзакции, осуществленные продавцами")
 public class Transaction {
 
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
+  @Schema(description = "Уникальный идентификатор транзакции", example = "1")
   private Long id;
 
   @ManyToOne(fetch = FetchType.LAZY)
   @JoinColumn(name = "seller_id", nullable = false)
+  @Schema(description = "Ссылка на продавца, к которому относится транзакция")
   private Seller seller;
 
+  @Schema(description = "Сумма транзакции", example = "25652.67")
   private BigDecimal amount;
 
   @Enumerated(EnumType.STRING)
   @Column(name = "payment_type")
+  @Schema(description = "ТИип оплаты",
+      allowableValues = {"CASH", "CARD", "TRANSFER"})
   private PaymentType paymentType;
 
   @Column(name = "transaction_date")
   @CurrentTimestamp
+  @Schema(description = "Дата и время совершения транзакции",
+      example = "2007-12-03T10:15:30")
   private LocalDateTime transactionDate;
 
 }
