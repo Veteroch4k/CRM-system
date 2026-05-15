@@ -12,5 +12,9 @@ spring:
     change-log: classpath:/db/changelog/db.migrations-master.yaml
     enabled: true
 
+  sql:
+    init:
+      mode: always
+
 server:
   port: 8080
