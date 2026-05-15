@@ -1,5 +1,6 @@
 package com.veteroch4k.crm.services;
 
+import com.veteroch4k.crm.exceptions.ResourceNotFoundException;
 import com.veteroch4k.crm.models.Seller;
 import com.veteroch4k.crm.repositories.SellerRepository;
 import java.net.URI;
@@ -23,7 +24,8 @@ public class SellerService {
   public Seller getSellerById(Long id) {
 
 
-    return  repository.findById(id).orElseThrow();
+    return  repository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Продавец с ID: " + id + " не найден"));
 
 
   }
