@@ -1,3 +1,16 @@
 spring:
   application:
     name: crm
+
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    url: jdbc:postgresql://localhost:5433/crm_db
+    username: root
+    password: root
+
+  liquibase:
+    change-log: classpath:/db/changelog/db.migrations-master.yaml
+    enabled: true
+
+server:
+  port: 8080

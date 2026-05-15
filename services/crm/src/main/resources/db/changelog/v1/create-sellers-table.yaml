@@ -7,10 +7,12 @@ databaseChangeLog:
             tableName: sellers
             columns:
               - column:
+                  autoIncrement: true
                   constraints:
                     primaryKey: true
+                    nullable: false
                   name: id
-                  type: BIGINT GENERATED ALWAYS AS IDENTITY
+                  type: BIGINT
               - column:
                   constraints:
                     nullable: false

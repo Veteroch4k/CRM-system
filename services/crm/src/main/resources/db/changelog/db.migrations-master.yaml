@@ -1,4 +1,8 @@
 databaseChangeLog:
   - include:
-      file:
+      file: v1/create-sellers-table.yaml
+      relativeToChangelogFile: true
+
+  - include:
+      file: v1/create-transactions-table.yaml
       relativeToChangelogFile: true
