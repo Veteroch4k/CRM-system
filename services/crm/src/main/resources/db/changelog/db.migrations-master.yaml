@@ -6,3 +6,7 @@ databaseChangeLog:
   - include:
       file: v1/create-transactions-table.yaml
       relativeToChangelogFile: true
+
+  - include:
+      file: v1/create-chk-transactions-table.yaml
+      relativeToChangelogFile: true

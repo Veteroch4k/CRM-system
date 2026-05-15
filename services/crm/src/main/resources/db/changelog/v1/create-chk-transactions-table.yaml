@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-chk-transactions-table
+      author: Veteroch4k
+      changes:
+        - sql:
+            sql: "ALTER TABLE TRANSACTIONS ADD CONSTRAINT chk_transactions_amount CHECK (amount >= 0);"
+        - sql:
+            sql: "ALTER TABLE TRANSACTIONS ADD CONSTRAINT chk_transactions_payment_type CHECK (payment_type IN ('CASH', 'CARD', 'TRANSFER'));"
+
+      rollback:
+        - sql:
+            sql: "ALTER TABLE transactions DROP CONSTRAINT chk_transactions_amount;"
+
+        - sql:
+            sql: "ALTER TABLE transactions DROP CONSTRAINT chk_transactions_payment_type;"
