@@ -1,0 +1,44 @@
+databaseChangeLog:
+  - changeSet:
+      id: create-transactions-table
+      author: Veteroch4k
+      changes:
+        - createTable:
+            tableName: transactions
+            columns:
+              - column:
+                  constraints:
+                    primaryKey: true
+                  name: id
+                  type: BIGINT GENERATED ALWAYS AS IDENTITY
+              - column:
+                  constraints:
+                    nullable: false
+                  name: seller_id
+                  type: BIGINT
+              - column:
+                  constraints:
+                    nullable: false
+                    checkConstraint: "amount >= 0"
+                  name: amount
+                  type: DECIMAL(10,2)
+              - column:
+                  constraints:
+                    checkConstraint: "payment_type IN ('CASH', 'CARD', 'TRANSFER')"
+                    nullable: false
+                  name: payment_type
+                  type: VARCHAR(8)
+              - column:
+                  constraints:
+                    nullable: false
+                  name: transaction_date
+                  type: TIMESTAMP
+                  defaultValueComputed: CURRENT_TIMESTAMP
+
+        - addForeignKeyConstraint:
+            baseTableName: transactions
+            baseColumnNames: seller_id
+            referencedTableName: sellers
+            referencedColumnNames: id
+            constraintName: fk_transactions_seller
+            onDelete: CASCADE
