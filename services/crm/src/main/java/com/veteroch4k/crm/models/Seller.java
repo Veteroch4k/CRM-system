@@ -27,12 +27,12 @@ public class Seller {
   private Long id;
 
   @Schema(description = "Имя продавца",
-      example = "Иваныч")
+      example = "Иваныч", nullable = false)
   private String name;
 
   @Column(name = "contact_info")
   @Schema(description = "Контактная информация продавца",
-      example = "почта: ivanich@mail.ru")
+      example = "почта: ivanich@mail.ru", nullable = true)
   private String contactInfo;
 
   @Column(name = "registration_date")

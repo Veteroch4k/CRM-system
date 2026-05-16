@@ -23,7 +23,6 @@ public class SellerService {
 
   public Seller getSellerById(Long id) {
 
-
     return  repository.findById(id)
         .orElseThrow(() -> new ResourceNotFoundException("Продавец с ID: " + id + " не найден"));
 
