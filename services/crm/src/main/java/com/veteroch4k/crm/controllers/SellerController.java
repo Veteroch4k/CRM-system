@@ -20,12 +20,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RequiredArgsConstructor
@@ -62,7 +65,7 @@ public class SellerController {
       @ApiResponse(responseCode = "200", description = "Продавцы получены"),
       @ApiResponse(
           responseCode = "400",
-          description = "Переданы некорректные параметры запроса",
+          description = "Ошибка валидации входных данных",
           content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       ),
       @ApiResponse(
@@ -96,6 +99,57 @@ public class SellerController {
 
     return ResponseEntity.status(HttpStatus.CREATED).body(service.createSeller(sellerDTO));
 
+
+  }
+
+  @Operation(summary = "Обновить инфо о продавце")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "204", description = "Продавец успшено обновлен"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Ошибка валидации входных данных",
+          content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
+      ),
+      @ApiResponse(
+          responseCode = "404",
+          description = "Продавца с заданным ID не существует",
+          content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
+      )
+  })
+  @PutMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void updateSeller(
+      @Parameter(description = "ID обновляемого продавца")
+      @PathVariable("id") @Positive Long id,
+
+      @Parameter(description = "Данные для обновления продавца")
+      @Valid @RequestBody SellerDTO sellerDTO
+
+  ) {
+     service.updateSeller(id, sellerDTO);
+  }
+
+  @Operation(description = "Удаление продавца по его ID")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "204", description = "Продавец успешно удалён"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Ошибка валидации входных данных",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      ),
+      @ApiResponse(
+          responseCode = "404",
+          description = "Продавец с заданным ID не существует",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      )
+  })
+  @DeleteMapping("/{id}")
+  @ResponseStatus(HttpStatus.NO_CONTENT)
+  public void deleteSeller(
+      @PathVariable("id") @Positive Long id
+  ) {
+
+    service.deleteSeller(id);
 
   }
 
