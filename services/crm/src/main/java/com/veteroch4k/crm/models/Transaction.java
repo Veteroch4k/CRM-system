@@ -22,7 +22,7 @@ import org.hibernate.annotations.CurrentTimestamp;
 @Getter @Setter
 @NoArgsConstructor
 @Entity
-@Table(name = "transaction")
+@Table(name = "transactions")
 @Schema(description = "Транзакции, осуществленные продавцами")
 public class Transaction {
 
@@ -53,8 +53,3 @@ public class Transaction {
 
 }
 
-enum PaymentType {
-  CASH,
-  CARD,
-  TRANSFER
-}

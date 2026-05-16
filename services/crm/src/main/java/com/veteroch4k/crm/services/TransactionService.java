@@ -1,6 +1,7 @@
 package com.veteroch4k.crm.services;
 
 import com.veteroch4k.crm.exceptions.ResourceNotFoundException;
+import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
 import com.veteroch4k.crm.models.Transaction;
 import com.veteroch4k.crm.repositories.TransactionRepository;
 import lombok.RequiredArgsConstructor;
@@ -16,9 +17,11 @@ public class TransactionService {
   private final TransactionRepository repository;
 
 
-  public Page<Transaction> getTransactions(int page, int size) {
+  public Page<TransactionResponseDTO> getTransactions(int page, int size) {
 
-    return repository.findAll(PageRequest.of(page, size, Sort.by("id").ascending()));
+    Page<Transaction> sellerPage = repository.findAll(PageRequest.of(page, size, Sort.by("id").ascending()));
+
+    return sellerPage.map(TransactionResponseDTO::new);
 
   }
 

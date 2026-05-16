@@ -1,5 +1,6 @@
 package com.veteroch4k.crm.controllers;
 
+import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
 import com.veteroch4k.crm.models.Transaction;
 import com.veteroch4k.crm.services.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -40,12 +41,12 @@ public class TransactionController {
       )
   })
   @GetMapping("")
-  public ResponseEntity<Page<Transaction>> getTransactions(
+  public ResponseEntity<Page<TransactionResponseDTO>> getTransactions(
       @Parameter(description = "Номер страницы")
-      @RequestParam("page") @PositiveOrZero int page,
+      @RequestParam(defaultValue = "0") @PositiveOrZero int page,
 
       @Parameter(description = "Размер страницы")
-      @RequestParam("size") @Positive int size
+      @RequestParam(defaultValue = "20") @Positive int size
   ) {
 
     return ResponseEntity.ok(service.getTransactions(page, size));
