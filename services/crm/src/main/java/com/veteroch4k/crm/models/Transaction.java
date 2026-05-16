@@ -36,16 +36,16 @@ public class Transaction {
   @Schema(description = "Ссылка на продавца, к которому относится транзакция")
   private Seller seller;
 
-  @Schema(description = "Сумма транзакции", example = "25652.67")
+  @Schema(description = "Сумма транзакции", example = "25652.67", nullable = false, minContains = 0)
   private BigDecimal amount;
 
   @Enumerated(EnumType.STRING)
-  @Column(name = "payment_type")
+  @Column(name = "payment_type", nullable = false)
   @Schema(description = "ТИип оплаты",
       allowableValues = {"CASH", "CARD", "TRANSFER"})
   private PaymentType paymentType;
 
-  @Column(name = "transaction_date")
+  @Column(name = "transaction_date", nullable = false)
   @CurrentTimestamp
   @Schema(description = "Дата и время совершения транзакции",
       example = "2007-12-03T10:15:30")

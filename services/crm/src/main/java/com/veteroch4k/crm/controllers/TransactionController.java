@@ -1,0 +1,82 @@
+package com.veteroch4k.crm.controllers;
+
+import com.veteroch4k.crm.models.Transaction;
+import com.veteroch4k.crm.services.TransactionService;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.PositiveOrZero;
+import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.ErrorResponse;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
+
+@RequiredArgsConstructor
+@RestController
+@RequestMapping("/api/transactions")
+@Tag(name = "Transaction API", description = "API для управления транзакциями")
+public class TransactionController {
+
+  private final TransactionService service;
+
+  @Operation(summary = "Получить все транзакций",
+  description = "Возвращает пагинированный список транзакций")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Транзакции получены"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Переданы некорректные параметры запроса",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      )
+  })
+  @GetMapping("")
+  public ResponseEntity<Page<Transaction>> getTransactions(
+      @Parameter(description = "Номер страницы")
+      @RequestParam("page") @PositiveOrZero int page,
+
+      @Parameter(description = "Размер страницы")
+      @RequestParam("size") @Positive int size
+  ) {
+
+    return ResponseEntity.ok(service.getTransactions(page, size));
+
+  }
+
+  @Operation(summary = "Получить транзакцию",
+  description = "Возвращает транзакцию по её ID")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Транзакция получена"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Ошибка валидации входных данных",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      ),
+      @ApiResponse(
+          responseCode = "404",
+          description = "Транзакции по заданному ID не существует",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      )
+  })
+  @GetMapping("/{id}")
+  public ResponseEntity<Transaction> getTransaction(
+      @Parameter(description = "ID искомой транзакции")
+      @PathVariable @Positive Long id
+  ) {
+
+    return ResponseEntity.ok(service.getTransaction(id));
+
+  }
+
+
+
+}

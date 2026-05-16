@@ -39,8 +39,8 @@ public class SellerController {
 
   private final SellerService service;
 
-  @Operation(summary = "Получить список всех продавцов",
-  description = "Возвращает список продавцов")
+  @Operation(summary = "Получить всех продавцов",
+  description = "Возвращает пагинированный список продавцов")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Продавцы получены"),
       @ApiResponse(
@@ -62,7 +62,7 @@ public class SellerController {
   @Operation(summary = "Получить инфо о конкретном продавце",
       description = "Возвращает конкретном продавца по его ID")
   @ApiResponses(value = {
-      @ApiResponse(responseCode = "200", description = "Продавцы получены"),
+      @ApiResponse(responseCode = "200", description = "Продавец получен"),
       @ApiResponse(
           responseCode = "400",
           description = "Ошибка валидации входных данных",
