@@ -1,12 +1,14 @@
 package com.veteroch4k.crm.services;
 
 import com.veteroch4k.crm.exceptions.ResourceNotFoundException;
+import com.veteroch4k.crm.models.DTO.SellerDTO;
 import com.veteroch4k.crm.models.Seller;
 import com.veteroch4k.crm.repositories.SellerRepository;
 import java.net.URI;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -30,4 +32,13 @@ public class SellerService {
   }
 
 
+  public Seller createSeller(SellerDTO sellerDTO) {
+
+    Seller seller = new Seller();
+    seller.setName(sellerDTO.name());
+    seller.setContactInfo(sellerDTO.contactInfo());
+
+    return repository.save(seller);
+
+  }
 }
