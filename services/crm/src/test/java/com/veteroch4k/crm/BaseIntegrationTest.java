@@ -1,7 +1,6 @@
 package com.veteroch4k.crm;
 
 import io.restassured.RestAssured;
-import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.BeforeEach;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
@@ -13,7 +12,7 @@ import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
 @Testcontainers
-public abstract class  BaseTest {
+public abstract class BaseIntegrationTest {
 
   @LocalServerPort
   private Integer port;

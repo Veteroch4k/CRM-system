@@ -2,7 +2,7 @@ package com.veteroch4k.crm.controllers;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-import com.veteroch4k.crm.BaseTest;
+import com.veteroch4k.crm.BaseIntegrationTest;
 import com.veteroch4k.crm.models.DTO.SellerDTO;
 import com.veteroch4k.crm.models.Seller;
 import com.veteroch4k.crm.repositories.SellerRepository;
@@ -11,7 +11,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-class SellerControllerIntegrationTest extends BaseTest {
+class SellerControllerIntegrationTest extends BaseIntegrationTest {
 
   @Autowired
   SellerRepository repository;
