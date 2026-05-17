@@ -114,6 +114,45 @@ public class TransactionControllerIntegrationTest extends BaseIntegrationTest {
 
   }
 
+  @Test
+  void shouldGetTransactionsBySeller() {
+
+    Seller s1 = new Seller();
+    s1.setName("test");
+    sellerRepository.save(s1);
+
+    Transaction t1 = new Transaction();
+    t1.setSeller(sellerRepository.getReferenceById(s1.getId()));
+    t1.setAmount(BigDecimal.valueOf(1.0));
+    t1.setPaymentType(PaymentType.CARD);
+
+    Transaction t2 = new Transaction();
+    t2.setSeller(sellerRepository.getReferenceById(s1.getId()));
+    t2.setAmount(BigDecimal.valueOf(2.0));
+    t2.setPaymentType(PaymentType.CASH);
+
+    transactionRepository.save(t1);
+    transactionRepository.save(t2);
+
+    given().
+        contentType(ContentType.JSON)
+    .when()
+        .get("/api/transactions/seller/{id}", s1.getId())
+    .then()
+        .statusCode(200)
+        .body("content.size()", equalTo(2))
+        .body("content[0].id", equalTo(t1.getId().intValue()))
+        .body("content[0].sellerId", equalTo(s1.getId().intValue()))
+        .body("content[0].amount", equalTo(t1.getAmount().floatValue()))
+        .body("content[1].id", equalTo(t2.getId().intValue()))
+        .body("content[1].sellerId", equalTo(s1.getId().intValue()))
+        .body("content[1].amount", equalTo(t2.getAmount().floatValue()));
+
+
+
+
+  }
+
 
 
 

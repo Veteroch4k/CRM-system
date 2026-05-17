@@ -51,4 +51,32 @@ public class TransactionControllerWebTest {
 
   }
 
+  @Test
+  void shouldReturn400WhenGetTransactionsBySellerParamsAreNotValid() throws Exception {
+    String page = "-1";
+    String size = "0";
+    String id = "1";
+
+    mockMvc.perform(
+            get("/api/transactions/seller/{id}", id)
+                .param("page", page)
+                .param("size", size))
+        .andExpectAll(
+            status().isBadRequest(),
+            jsonPath("$.message").value("must be greater than or equal to 0"));
+  }
+
+  @Test
+  void shouldReturn400WhenGetTransactionsBySellerPathVariableIdIsNotValid() throws Exception {
+    String notValidId = "-1";
+
+    mockMvc.perform(
+            get("/api/transactions/seller/{id}", notValidId)
+        )
+        .andExpectAll(
+            status().isBadRequest(),
+            jsonPath("$.message").value("must be greater than 0"));
+  }
+
+
 }

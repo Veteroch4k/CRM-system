@@ -112,11 +112,6 @@ public class TransactionController {
           responseCode = "400",
           description = "Ошибка валидации входных данных",
           content = @Content (schema = @Schema (implementation = ErrorResponse.class))
-      ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Транзакций по заданному ID продавца не существует",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("/seller/{id}")
