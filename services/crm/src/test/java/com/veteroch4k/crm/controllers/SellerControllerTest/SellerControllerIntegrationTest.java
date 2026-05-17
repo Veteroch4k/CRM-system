@@ -1,4 +1,4 @@
-package com.veteroch4k.crm.controllers;
+package com.veteroch4k.crm.controllers.SellerControllerTest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;

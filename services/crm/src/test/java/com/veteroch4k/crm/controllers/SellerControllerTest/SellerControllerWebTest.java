@@ -1,5 +1,6 @@
-package com.veteroch4k.crm.controllers;
+package com.veteroch4k.crm.controllers.SellerControllerTest;
 
+import com.veteroch4k.crm.controllers.SellerController;
 import com.veteroch4k.crm.services.SellerService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
