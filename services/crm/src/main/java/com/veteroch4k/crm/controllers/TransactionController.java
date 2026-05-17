@@ -1,5 +1,6 @@
 package com.veteroch4k.crm.controllers;
 
+import com.veteroch4k.crm.models.DTO.TransactionRequestDTO;
 import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
 import com.veteroch4k.crm.models.Transaction;
 import com.veteroch4k.crm.services.TransactionService;
@@ -9,15 +10,20 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.responses.FailedApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -30,7 +36,7 @@ public class TransactionController {
 
   private final TransactionService service;
 
-  @Operation(summary = "Получить все транзакций",
+  @Operation(summary = "Получить список всех транзакций",
   description = "Возвращает пагинированный список транзакций")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Транзакции получены"),
@@ -53,7 +59,7 @@ public class TransactionController {
 
   }
 
-  @Operation(summary = "Получить транзакцию",
+  @Operation(summary = "Получить инфо о конкретной транзакции",
   description = "Возвращает транзакцию по её ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Транзакция получена"),
@@ -77,6 +83,57 @@ public class TransactionController {
     return ResponseEntity.ok(service.getTransaction(id));
 
   }
+
+  @Operation(summary = "Создать новую транзакцию")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "201", description = "Транзакция успешно создана"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Ошибка валидации входных данных",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+
+      )
+  })
+  @PostMapping("")
+  public ResponseEntity<TransactionResponseDTO> createTransaction(
+      @Parameter(description = "Данные для создания транзакции")
+      @Valid @RequestBody TransactionRequestDTO dto
+  ) {
+
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.createTransaction(dto));
+
+  }
+
+  @Operation(summary = "Получить все транзакции продавца",
+  description = "Возвращает пагинированный список транзакций конкретного продавца по его ID")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Транзакции получены"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Ошибка валидации входных данных",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      ),
+      @ApiResponse(
+          responseCode = "404",
+          description = "Транзакций по заданному ID продавца не существует",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      )
+  })
+  @GetMapping("/seller/{id}")
+  public ResponseEntity<Page<TransactionResponseDTO>> getTransactionsBySeller(
+      @Parameter(description = "ID продавца")
+      @PathVariable("id") @Positive Long id,
+
+      @Parameter(description = "Номер страницы")
+      @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+
+      @Parameter(description = "Размер страницы")
+      @RequestParam(defaultValue = "20") @Positive int size
+
+  ) {
+    return ResponseEntity.ok(service.getTransactionsBySeller(id, page, size));
+  }
+
 
 
 
