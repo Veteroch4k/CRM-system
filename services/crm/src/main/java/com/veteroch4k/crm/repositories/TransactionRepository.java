@@ -1,10 +1,11 @@
 package com.veteroch4k.crm.repositories;
 
-import com.veteroch4k.crm.models.DTO.SellerDTO;
 import com.veteroch4k.crm.models.DTO.analytics.SellerProductivityDTO;
 import com.veteroch4k.crm.models.Transaction;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -70,5 +71,18 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
       @Param("target") BigDecimal target,
       Pageable pageable
   );
+
+  /**
+   * Получить список дат, когда были совершены транзакции определённым продавцом
+   */
+  @Query(value = """
+    SELECT t.transaction_date
+    FROM transactions t 
+    WHERE t.seller_id = :sellerId 
+    ORDER BY t.transaction_date ASC
+    """, nativeQuery = true)
+  List<Timestamp> findDatesBySellerId(@Param("sellerId") Long sellerId);
+
+
 
 }

@@ -1,6 +1,7 @@
 package com.veteroch4k.crm.services;
 
 import com.veteroch4k.crm.exceptions.ResourceNotFoundException;
+import com.veteroch4k.crm.models.DTO.analytics.BestPeriodResult;
 import com.veteroch4k.crm.models.DTO.analytics.SellerProductivityDTO;
 import com.veteroch4k.crm.models.DTO.TransactionRequestDTO;
 import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
@@ -8,13 +9,17 @@ import com.veteroch4k.crm.models.Transaction;
 import com.veteroch4k.crm.repositories.SellerRepository;
 import com.veteroch4k.crm.repositories.TransactionRepository;
 import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.List;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -127,6 +132,48 @@ public class TransactionService {
         + " не было никаких транзакций");
 
     return top;
+
+  }
+
+  /**
+   * Получить самое продуктивное время продавца (диапазон дат).
+   * Самое продуктивное время то, где продавец совершил наибольшее кол-во транзакций.
+   *
+   * @param sellerId ID рассматриваемого продавца
+   * @param duration Длительность наилучшего периода времени (в днях)
+   * @return Возвращает лучший период продавца
+   */
+  @Transactional
+  public BestPeriodResult getBestPeriodOfSeller(Long sellerId, Duration duration) {
+
+    if(!sellerRepository.existsById(sellerId)) throw new ResourceNotFoundException("Продавца с ID: " + sellerId + " не существует");
+
+    List<LocalDateTime> dates = transactionRepository.findDatesBySellerId(sellerId)
+        .stream()
+        .map(Timestamp::toLocalDateTime)
+        .toList();
+
+    if(dates.isEmpty()) throw new ResourceNotFoundException("У продавца с ID: " + sellerId + " нет транзакций");
+
+    int maxCount = 0;
+    LocalDateTime startPeriod = null, endPeriod = null;
+
+    int left = 0, right = 0;
+
+    while (right < dates.size()) {
+
+      while (Duration.between(dates.get(left), dates.get(right)).compareTo(duration) > 0) left++;
+
+      int curCount = right - left + 1;
+
+      if (curCount > maxCount) {
+        maxCount = curCount;
+        startPeriod = dates.get(left);
+        endPeriod = dates.get(right);
+      }
+      right++;
+    }
+    return new BestPeriodResult(startPeriod, endPeriod, maxCount);
 
   }
 }

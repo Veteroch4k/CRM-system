@@ -1,5 +1,6 @@
 package com.veteroch4k.crm.controllers;
 
+import com.veteroch4k.crm.models.DTO.analytics.BestPeriodResult;
 import com.veteroch4k.crm.models.DTO.analytics.SellerProductivityDTO;
 import com.veteroch4k.crm.models.DTO.TransactionRequestDTO;
 import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
@@ -17,6 +18,7 @@ import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
 import java.math.BigDecimal;
+import java.time.Duration;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -205,5 +207,35 @@ public class TransactionController {
 
     return ResponseEntity.ok(service.getSellersOutsiders(startDate, endDate, target, page, size));
   }
+
+  @Operation(summary = "Получить самое продуктивное время продавца",
+  description = "Возвращает наилучший период времени продавца по количеству совершенных транзакций")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Ошибка валидации входных данных",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      ),
+      @ApiResponse(
+          responseCode = "404",
+          description = "Искомого продавца не существует",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      )
+  })
+  @GetMapping("/analytics/best-period-seller/{sellerId}")
+  public ResponseEntity<BestPeriodResult> getBestPeriodOfSeller(
+      @Parameter(description = "ID рассматриваемого продавца")
+      @PathVariable("sellerId") @Positive Long id,
+
+      @Parameter(description = "Искомый период времени", example = "30")
+      @RequestParam(defaultValue = "30") @Positive Integer days
+
+  ) {
+
+    return ResponseEntity.ok(service.getBestPeriodOfSeller(id, Duration.ofDays(days)));
+
+  }
+
 
 }
