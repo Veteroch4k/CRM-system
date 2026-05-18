@@ -11,7 +11,7 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-  //404
+  //404 не существует записи
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException e) {
     ErrorResponse errorResponse = new ErrorResponse(
@@ -37,7 +37,7 @@ public class GlobalExceptionHandler {
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
   }
 
-  //404
+  //400
   @ExceptionHandler(MethodArgumentNotValidException.class)
   public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
 
@@ -49,6 +49,22 @@ public class GlobalExceptionHandler {
     );
 
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+
+  }
+
+  //400 c датами
+  @ExceptionHandler(IllegalArgumentException.class)
+  public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
+
+    ErrorResponse errorResponse = new ErrorResponse(
+        LocalDateTime.now(),
+        HttpStatus.BAD_REQUEST.value(),
+        HttpStatus.BAD_REQUEST.getReasonPhrase(),
+        e.getMessage()
+    );
+
+    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
+
 
   }
 

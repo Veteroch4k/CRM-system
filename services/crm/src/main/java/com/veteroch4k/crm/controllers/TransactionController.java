@@ -1,5 +1,6 @@
 package com.veteroch4k.crm.controllers;
 
+import com.veteroch4k.crm.models.DTO.SellerProductivityDTO;
 import com.veteroch4k.crm.models.DTO.TransactionRequestDTO;
 import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
 import com.veteroch4k.crm.models.Transaction;
@@ -10,13 +11,16 @@ import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
-import io.swagger.v3.oas.annotations.responses.FailedApiResponse;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import jakarta.validation.Valid;
+import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.format.annotation.DateTimeFormat.ISO;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.ErrorResponse;
@@ -130,6 +134,33 @@ public class TransactionController {
   }
 
 
+  @Operation(summary = "Получить самого эффективного продавца",
+  description = "Возвращает пагинированный список лучших продавцов за указанный период")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Ошибка валидации входных данных",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      )
+  })
+  @GetMapping("/analytics/top-seller")
+  public ResponseEntity<Page<SellerProductivityDTO>> getMostProductiveSeller(
+      @Parameter(description = "Начало диапазона", example = "2025-05-15T13:40:25")
+      @RequestParam @PastOrPresent  @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
 
+      @Parameter(description = "Конец диапазона", example = "2026-05-17T15:11:49")
+      @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
+
+      @Parameter(description = "Номер страницы")
+      @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+
+      @Parameter(description = "Размер страницы")
+      @RequestParam(defaultValue = "20") @Positive int size
+
+  ) {
+
+    return ResponseEntity.ok(service.getMostProductiveSeller(startDate, endDate, page, size));
+  }
 
 }

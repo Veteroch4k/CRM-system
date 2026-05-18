@@ -6,6 +6,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import com.veteroch4k.crm.controllers.TransactionController;
 import com.veteroch4k.crm.services.TransactionService;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
@@ -78,5 +80,23 @@ public class TransactionControllerWebTest {
             jsonPath("$.message").value("must be greater than 0"));
   }
 
+  @Test
+  void shouldReturn400WhenGetMostProductiveSellerParamsAreNotValid() throws Exception {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    String endDate = LocalDateTime.now().minusMonths(1).format(formatter);
+    String startDate = LocalDateTime.now().plusDays(1).format(formatter);
+
+
+    mockMvc.perform(
+        get("/api/transactions/analytics/top-seller")
+            .param("startDate", startDate)
+            .param("endDate", endDate)
+        )
+        .andExpectAll(
+            status().isBadRequest(),
+            jsonPath("$.message").value("must be a date in the past or in the present")
+        );
+  }
 
 }
