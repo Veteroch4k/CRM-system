@@ -1,6 +1,6 @@
 package com.veteroch4k.crm.controllers;
 
-import com.veteroch4k.crm.models.DTO.SellerProductivityDTO;
+import com.veteroch4k.crm.models.DTO.analytics.SellerProductivityDTO;
 import com.veteroch4k.crm.models.DTO.TransactionRequestDTO;
 import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
 import com.veteroch4k.crm.models.Transaction;
@@ -16,6 +16,7 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.PastOrPresent;
 import jakarta.validation.constraints.Positive;
 import jakarta.validation.constraints.PositiveOrZero;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -142,6 +143,11 @@ public class TransactionController {
           responseCode = "400",
           description = "Ошибка валидации входных данных",
           content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      ),
+      @ApiResponse(
+          responseCode = "404",
+          description = "За указанный период не было никаких транзакций",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("/analytics/top-seller")
@@ -161,6 +167,43 @@ public class TransactionController {
   ) {
 
     return ResponseEntity.ok(service.getMostProductiveSeller(startDate, endDate, page, size));
+  }
+
+  @Operation(summary = "Получить список продавцов с суммой меньше указанной за выбранный период",
+  description = "Выводит пагинированный список продавцов, у которых сумма всех транзакций за выбранные период"
+      + " меньше переданного параметра суммы")
+  @ApiResponses(value = {
+      @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
+      @ApiResponse(
+          responseCode = "400",
+          description = "Ошибка валидации входных данных",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      ),
+      @ApiResponse(
+          responseCode = "404",
+          description = "За указанный период не было никаких транзакций",
+          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      )
+  })
+  @GetMapping("/analytics/outsiders")
+  public ResponseEntity<Page<SellerProductivityDTO>> getSellersOutsiders(
+      @Parameter(description = "Начало диапазона", example = "2025-05-15T13:40:25")
+      @RequestParam @PastOrPresent  @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime startDate,
+
+      @Parameter(description = "Конец диапазона", example = "2026-05-17T15:11:49")
+      @RequestParam @DateTimeFormat(iso = ISO.DATE_TIME) LocalDateTime endDate,
+
+      @Parameter(description = "переданный параметр суммы")
+      @RequestParam(defaultValue = "6767.67") @PositiveOrZero BigDecimal target,
+
+      @Parameter(description = "Номер страницы")
+      @RequestParam(defaultValue = "0") @PositiveOrZero int page,
+
+      @Parameter(description = "Размер страницы")
+      @RequestParam(defaultValue = "20") @Positive int size
+  ) {
+
+    return ResponseEntity.ok(service.getSellersOutsiders(startDate, endDate, target, page, size));
   }
 
 }

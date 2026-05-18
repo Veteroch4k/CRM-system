@@ -1,9 +1,9 @@
-package com.veteroch4k.crm.models.DTO;
+package com.veteroch4k.crm.models.DTO.analytics;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import java.math.BigDecimal;
 
-@Schema(description = "Данные о самом эффективном продавце")
+@Schema(description = "Данные об эффективности продавца")
 public record SellerProductivityDTO(
 
     @Schema(description = "ID продавца", example = "1")

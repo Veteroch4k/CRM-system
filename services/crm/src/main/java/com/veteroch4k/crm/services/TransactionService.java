@@ -1,19 +1,20 @@
 package com.veteroch4k.crm.services;
 
 import com.veteroch4k.crm.exceptions.ResourceNotFoundException;
-import com.veteroch4k.crm.models.DTO.SellerProductivityDTO;
+import com.veteroch4k.crm.models.DTO.analytics.SellerProductivityDTO;
 import com.veteroch4k.crm.models.DTO.TransactionRequestDTO;
 import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
 import com.veteroch4k.crm.models.Transaction;
 import com.veteroch4k.crm.repositories.SellerRepository;
 import com.veteroch4k.crm.repositories.TransactionRepository;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.web.method.annotation.HandlerMethodValidationException;
 
 @Service
 @RequiredArgsConstructor
@@ -77,15 +78,15 @@ public class TransactionService {
 
 
   /**
-   * Получить самого эффективного продавца за указанный диапазон
-   * (самый продуктивный тот, у которого сумма всех транзакций больше всех других продавцов).
+   * Получить самого эффективного продавца за указанный диапазон (самый продуктивный тот, у которого
+   * сумма всех транзакций больше всех других продавцов).
    *
    * @param startDate начало диапазона
-   * @param endDate конец диапазона
-   * @param page номер страницы
-   * @param size размер страницы
-   * @return Возвращает пагинированный список, так как продавцов может быть несколько
-   * (с одинаковыми суммами транзакций)
+   * @param endDate   конец диапазона
+   * @param page      номер страницы
+   * @param size      размер страницы
+   * @return Возвращает пагинированный список, так как продавцов может быть несколько (с одинаковыми
+   * суммами транзакций)
    */
   public Page<SellerProductivityDTO> getMostProductiveSeller(LocalDateTime startDate, LocalDateTime endDate,
       int page, int size)
@@ -94,6 +95,32 @@ public class TransactionService {
     if(startDate.isAfter(endDate)) throw new IllegalArgumentException("Дата начала не может быть позже даты окончания");
 
     Page<SellerProductivityDTO> top = transactionRepository.findMostProductiveSeller(startDate, endDate,
+        PageRequest.of(page, size));
+
+    if(top.isEmpty()) throw new ResourceNotFoundException("За указанный период " + startDate + " - " + endDate
+        + " не было никаких транзакций");
+
+    return top;
+
+  }
+
+
+  /**
+   * Получить список продавцов с суммой меньше указанной за выбранный период
+   *
+   * @param startDate начало диапазона
+   * @param endDate конец диапазона
+   * @param target переданный параметр суммы
+   * @param page номер страницы
+   * @param size размер страницы
+   * @return Возвращает пагинированный список подходящих под условие продавцов
+   */
+  public Page<SellerProductivityDTO> getSellersOutsiders(LocalDateTime startDate, LocalDateTime endDate,
+      BigDecimal target, int page, int size)
+  {
+    if(startDate.isAfter(endDate)) throw new IllegalArgumentException("Дата начала не может быть позже даты окончания");
+
+    Page<SellerProductivityDTO> top = transactionRepository.findOutsiders(startDate, endDate, target,
         PageRequest.of(page, size));
 
     if(top.isEmpty()) throw new ResourceNotFoundException("За указанный период " + startDate + " - " + endDate

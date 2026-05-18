@@ -2,6 +2,7 @@ package com.veteroch4k.crm.controllers.TransactionControllerTest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
+import static org.hamcrest.Matchers.lessThan;
 
 import com.veteroch4k.crm.BaseIntegrationTest;
 import com.veteroch4k.crm.models.PaymentType;
@@ -260,13 +261,120 @@ public class TransactionControllerIntegrationTest extends BaseIntegrationTest {
         contentType(ContentType.JSON)
         .queryParam("startDate", startDate)
         .queryParam("endDate", endDate)
-        .when()
+    .when()
         .get("/api/transactions/analytics/top-seller")
-        .then()
+    .then()
         .statusCode(404)
         .body("message", equalTo("За указанный период " + startDate + " - " + endDate
             + " не было никаких транзакций"));
 
+  }
+
+  @Test
+  void shouldGetSellersOutsiders() {
+
+    // Данные о первом продавце
+
+    Seller s1 = new Seller();
+    s1.setName("top1");
+    sellerRepository.save(s1);
+
+    Transaction t1 = new Transaction();
+    t1.setSeller(sellerRepository.getReferenceById(s1.getId()));
+    t1.setAmount(BigDecimal.valueOf(10.0));
+    t1.setPaymentType(PaymentType.CARD);
+
+
+    transactionRepository.save(t1);
+
+
+    // Данные о втором продавце
+
+    Seller s2 = new Seller();
+    s2.setName("top2");
+    sellerRepository.save(s2);
+
+    Transaction t1_2 = new Transaction();
+    t1_2.setSeller(sellerRepository.getReferenceById(s2.getId()));
+    t1_2.setAmount(BigDecimal.valueOf(5.0));
+    t1_2.setPaymentType(PaymentType.CARD);
+
+
+    transactionRepository.save(t1_2);
+
+    // Данные о третьем продавце (не аутсайдер)
+
+    BigDecimal target = new BigDecimal("15.0");
+
+
+    Seller s3 = new Seller();
+    s3.setName("top1-1");
+    sellerRepository.save(s3);
+
+    Transaction t1_1 = new Transaction();
+    t1_1.setSeller(sellerRepository.getReferenceById(s3.getId()));
+    t1_1.setAmount(target);
+    t1_1.setPaymentType(PaymentType.CARD);
+
+
+    transactionRepository.save(t1_1);
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    String startDate = LocalDateTime.now().minusMonths(1).format(formatter);
+    String endDate = LocalDateTime.now().plusDays(1).format(formatter);
+
+
+    given().
+        contentType(ContentType.JSON)
+        .queryParam("startDate", startDate)
+        .queryParam("endDate", endDate)
+        .queryParam("target", target)
+    .when()
+        .get("/api/transactions/analytics/outsiders")
+    .then()
+        .statusCode(200)
+        .body("content.size()", equalTo(2))
+        .body("content[0].sellerId", equalTo(s1.getId().intValue()))
+        .body("content[0].sellerName", equalTo(s1.getName()))
+        .body("content[0].totalAmount", lessThan(target.floatValue()))
+        .body("content[1].sellerId", equalTo(s2.getId().intValue()))
+        .body("content[1].sellerName", equalTo(s2.getName()))
+        .body("content[1].totalAmount",  lessThan(target.floatValue()));
+
+  }
+
+  @Test
+  void shouldReturn404WhenGetSellersOutsiders() {
+
+    BigDecimal target = new BigDecimal("15.0");
+
+    Seller s3 = new Seller();
+    s3.setName("top1-1");
+    sellerRepository.save(s3);
+
+    Transaction t1_1 = new Transaction();
+    t1_1.setSeller(sellerRepository.getReferenceById(s3.getId()));
+    t1_1.setAmount(target);
+    t1_1.setPaymentType(PaymentType.CARD);
+
+
+    transactionRepository.save(t1_1);
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    String startDate = LocalDateTime.now().minusMonths(2).format(formatter);
+    String endDate = LocalDateTime.now().minusMonths(1).format(formatter);
+
+    given().
+        contentType(ContentType.JSON)
+        .queryParam("startDate", startDate)
+        .queryParam("endDate", endDate)
+        .queryParam("target", target)
+    .when()
+        .get("/api/transactions/analytics/outsiders")
+    .then()
+        .statusCode(404)
+        .body("message", equalTo("За указанный период " + startDate + " - " + endDate
+            + " не было никаких транзакций"));
   }
 
 

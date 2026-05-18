@@ -99,4 +99,24 @@ public class TransactionControllerWebTest {
         );
   }
 
+  @Test
+  void shouldReturn400WhenGetSellersOutsidersParamsAreNotValid() throws Exception {
+
+    DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss");
+    String endDate = LocalDateTime.now().minusMonths(1).format(formatter);
+    String startDate = LocalDateTime.now().plusDays(1).format(formatter);
+
+
+    mockMvc.perform(
+        get("/api/transactions/analytics/outsiders")
+            .param("startDate", startDate)
+            .param("endDate", endDate)
+            .param("target", "10.0")
+        )
+        .andExpectAll(
+            status().isBadRequest(),
+            jsonPath("$.message").value("must be a date in the past or in the present")
+        );
+  }
+
 }

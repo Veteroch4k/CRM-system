@@ -1,10 +1,10 @@
 package com.veteroch4k.crm.repositories;
 
-import com.veteroch4k.crm.models.DTO.SellerProductivityDTO;
-import com.veteroch4k.crm.models.Seller;
+import com.veteroch4k.crm.models.DTO.SellerDTO;
+import com.veteroch4k.crm.models.DTO.analytics.SellerProductivityDTO;
 import com.veteroch4k.crm.models.Transaction;
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -22,7 +22,9 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
 
   Page<Transaction> findAllBySellerId(Long sellerId, Pageable pageable);
 
-
+  /**
+   * Получить самого продуктивного продавца за указанный период.
+   */
   @Query(value = """
       WITH seller_totals AS (
                   SELECT
@@ -43,6 +45,29 @@ public interface TransactionRepository extends JpaRepository<Transaction, Long> 
   Page<SellerProductivityDTO> findMostProductiveSeller(
       @Param("startDate") LocalDateTime startDate,
       @Param("endDate") LocalDateTime endDate,
+      Pageable pageable
+  );
+
+
+  /**
+   * Получить список продавцов с суммой меньше указанной за выбранный период
+   */
+  @Query(value = """
+      SELECT
+      	s.id as id,
+      	s.name as name,
+      	SUM(t.amount) as total_amount
+      FROM transactions t
+      JOIN sellers s ON t.seller_id = s.id
+      WHERE t.transaction_date >= :startDate AND t.transaction_date <= :endDate
+      GROUP BY s.id, s.name
+      HAVING SUM(t.amount) < :target
+      ORDER BY name;
+      """, nativeQuery = true)
+  Page<SellerProductivityDTO> findOutsiders(
+      @Param("startDate") LocalDateTime startDate,
+      @Param("endDate") LocalDateTime endDate,
+      @Param("target") BigDecimal target,
       Pageable pageable
   );
 
