@@ -1,7 +1,15 @@
+name: crm-app
+
 services:
   postgres:
     image: postgres:15
     container_name: crm_postgres
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready -U root -d root" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    restart: unless-stopped
     environment:
       POSTGRES_USER: root
       POSTGRES_PASSWORD: root
@@ -10,6 +18,21 @@ services:
       - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
+    networks:
+      - backend
+
+  crm-app:
+    build: ../services/crm
+    container_name: crm-app
+    ports:
+      - "8080:8080"
+    restart: unless-stopped
+    environment:
+      - DB_HOST=postgres
+      - DB_PORT=5432
+    depends_on:
+      postgres:
+        condition: service_healthy
     networks:
       - backend
 
