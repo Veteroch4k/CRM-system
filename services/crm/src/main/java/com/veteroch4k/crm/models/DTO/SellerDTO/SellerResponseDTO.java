@@ -26,13 +26,17 @@ public record SellerResponseDTO (
 
   @Schema(description = "Дата и время регистрации продавца в системе",
       example = "2007-12-03T10:15:30")
-  LocalDateTime registrationDate
+  LocalDateTime registrationDate,
+
+  @Schema(description = "Флаг удалена ли запись",
+      allowableValues = {"true", "false"})
+  boolean deleted
 
 )
 {
   public SellerResponseDTO(Seller seller) {
     this(seller.getId(),seller.getName(), seller.getContactInfo(),
-       seller.getRegistrationDate());
+       seller.getRegistrationDate(), seller.isDeleted());
 
   }
 
