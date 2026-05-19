@@ -45,11 +45,11 @@ CRM-system — это RESTful API, разработанное на базе Spri
 *   **Язык:** Java 21
 *   **Фреймворк:** Spring Boot 3 
 *   **База данных:** PostgreSQL
-*   **Миграции БД** Liquibase
-*   **ORM** Hibernate 
-*   **Контейнеризация** Docker
-*   **Документация API** SpringDoc OpenAPI (Swagger)
-*   **Тестирование** Testcontainers и JUnit
+*   **Миграции БД:** Liquibase
+*   **ORM:** Hibernate 
+*   **Контейнеризация:** Docker
+*   **Документация API:** SpringDoc OpenAPI (Swagger)
+*   **Тестирование:** Testcontainers и JUnit
 
 ## Установка и запуск
 Перед началом убедитесь, что у вас установлены:
