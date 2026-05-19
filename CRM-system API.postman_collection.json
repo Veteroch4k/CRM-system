@@ -1,0 +1,2057 @@
+{
+  "info": {
+    "_postman_id": "12c4e258-e8b2-41db-9d3a-19264076d66d",
+    "name": "CRM-system API",
+    "description": "API CRM-системы\n\nContact Support:\n Name: Popov Victor\n Email: viktor.popov2005@mail.ru",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "42777176"
+  },
+  "item": [
+    {
+      "name": "api",
+      "item": [
+        {
+          "name": "sellers",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Получить инфо о конкретном продавце",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/sellers/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "sellers",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5860",
+                          "description": "ID продавца"
+                        }
+                      ]
+                    },
+                    "description": "Возвращает конкретном продавца по его ID"
+                  },
+                  "response": [
+                    {
+                      "name": "Продавец получен",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID продавца"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": 1,\n  \"name\": \"Иваныч\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\",\n  \"registrationDate\": \"2007-12-03T10:15:30\",\n  \"deleted\": true\n}"
+                    },
+                    {
+                      "name": "Ошибка валидации входных данных",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID продавца"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                    },
+                    {
+                      "name": "Продавца по заданному ID не существует",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID продавца"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "Обновить инфо о продавце",
+                  "request": {
+                    "method": "PUT",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Григорян\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/sellers/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "sellers",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5860",
+                          "description": "ID обновляемого продавца"
+                        }
+                      ]
+                    }
+                  },
+                  "response": [
+                    {
+                      "name": "Продавец успшено обновлен",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Григорян\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID обновляемого продавца"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "Ошибка валидации входных данных",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Григорян\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID обновляемого продавца"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                    },
+                    {
+                      "name": "Продавца с заданным ID не существует",
+                      "originalRequest": {
+                        "method": "PUT",
+                        "header": [
+                          {
+                            "key": "Content-Type",
+                            "value": "application/json"
+                          },
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "body": {
+                          "mode": "raw",
+                          "raw": "{\n  \"name\": \"Григорян\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\"\n}",
+                          "options": {
+                            "raw": {
+                              "headerFamily": "json",
+                              "language": "json"
+                            }
+                          }
+                        },
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID обновляемого продавца"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                    }
+                  ]
+                },
+                {
+                  "name": "delete Seller",
+                  "request": {
+                    "method": "DELETE",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/sellers/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "sellers",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5860"
+                        }
+                      ]
+                    },
+                    "description": "Удаление продавца по его ID"
+                  },
+                  "response": [
+                    {
+                      "name": "Продавец успешно удалён",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "No Content",
+                      "code": 204,
+                      "_postman_previewlanguage": "text",
+                      "header": [],
+                      "cookie": [],
+                      "body": null
+                    },
+                    {
+                      "name": "Ошибка валидации входных данных",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                    },
+                    {
+                      "name": "Продавец с заданным ID не существует",
+                      "originalRequest": {
+                        "method": "DELETE",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/sellers/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "sellers",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Получить всех продавцов",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/sellers?page=0&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "sellers"
+                  ],
+                  "query": [
+                    {
+                      "description": "Номер страницы",
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Размер страницы",
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ]
+                },
+                "description": "Возвращает пагинированный список продавцов"
+              },
+              "response": [
+                {
+                  "name": "Продавцы получены",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/sellers?page=0&size=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "sellers"
+                      ],
+                      "query": [
+                        {
+                          "description": "Номер страницы",
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Размер страницы",
+                          "key": "size",
+                          "value": "20"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"content\": [\n    {\n      \"id\": 1,\n      \"name\": \"Иваныч\",\n      \"contactInfo\": \"почта: ivanich@mail.ru\",\n      \"registrationDate\": \"2007-12-03T10:15:30\",\n      \"deleted\": true\n    },\n    {\n      \"id\": 1,\n      \"name\": \"Иваныч\",\n      \"contactInfo\": \"почта: ivanich@mail.ru\",\n      \"registrationDate\": \"2007-12-03T10:15:30\",\n      \"deleted\": true\n    }\n  ],\n  \"page\": {\n    \"size\": 6036,\n    \"number\": 6716,\n    \"totalElements\": 7149,\n    \"totalPages\": 4185\n  }\n}"
+                },
+                {
+                  "name": "Переданы некорректные параметры запроса",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/sellers?page=0&size=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "sellers"
+                      ],
+                      "query": [
+                        {
+                          "description": "Номер страницы",
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Размер страницы",
+                          "key": "size",
+                          "value": "20"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Создать нового продавца",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"name\": \"Григорян\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\"\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/sellers",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "sellers"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Продавец успешно создан",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Григорян\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/sellers",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "sellers"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"name\": \"Иваныч\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\",\n  \"registrationDate\": \"2007-12-03T10:15:30\",\n  \"deleted\": true\n}"
+                },
+                {
+                  "name": "Ошибка валидации входных данных",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"name\": \"Григорян\",\n  \"contactInfo\": \"почта: ivanich@mail.ru\"\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/sellers",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "sellers"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                }
+              ]
+            }
+          ]
+        },
+        {
+          "name": "transactions",
+          "item": [
+            {
+              "name": "{id}",
+              "item": [
+                {
+                  "name": "Получить инфо о конкретной транзакции",
+                  "request": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/transactions/:id",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "transactions",
+                        ":id"
+                      ],
+                      "variable": [
+                        {
+                          "key": "id",
+                          "value": "5860",
+                          "description": "ID искомой транзакции"
+                        }
+                      ]
+                    },
+                    "description": "Возвращает транзакцию по её ID"
+                  },
+                  "response": [
+                    {
+                      "name": "Транзакция получена",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/transactions/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID искомой транзакции"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "OK",
+                      "code": 200,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"id\": 1,\n  \"seller\": {\n    \"id\": 1,\n    \"name\": \"Иваныч\",\n    \"contactInfo\": \"почта: ivanich@mail.ru\",\n    \"registrationDate\": \"2007-12-03T10:15:30\",\n    \"deleted\": true\n  },\n  \"amount\": 7176.378788682494,\n  \"paymentType\": \"TRANSFER\",\n  \"transactionDate\": \"2007-12-03T10:15:30\"\n}"
+                    },
+                    {
+                      "name": "Ошибка валидации входных данных",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/transactions/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID искомой транзакции"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Bad Request",
+                      "code": 400,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                    },
+                    {
+                      "name": "Транзакции по заданному ID не существует",
+                      "originalRequest": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/transactions/:id",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "transactions",
+                            ":id"
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID искомой транзакции"
+                            }
+                          ]
+                        }
+                      },
+                      "status": "Not Found",
+                      "code": 404,
+                      "_postman_previewlanguage": "text",
+                      "header": [
+                        {
+                          "key": "Content-Type",
+                          "value": "*/*"
+                        }
+                      ],
+                      "cookie": [],
+                      "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "seller",
+              "item": [
+                {
+                  "name": "{id}",
+                  "item": [
+                    {
+                      "name": "Получить все транзакции продавца",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/transactions/seller/:id?page=0&size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "transactions",
+                            "seller",
+                            ":id"
+                          ],
+                          "query": [
+                            {
+                              "description": "Номер страницы",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Размер страницы",
+                              "key": "size",
+                              "value": "20"
+                            }
+                          ],
+                          "variable": [
+                            {
+                              "key": "id",
+                              "value": "5860",
+                              "description": "ID продавца"
+                            }
+                          ]
+                        },
+                        "description": "Возвращает пагинированный список транзакций конкретного продавца по его ID"
+                      },
+                      "response": [
+                        {
+                          "name": "Транзакции получены",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/seller/:id?page=0&size=20",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "seller",
+                                ":id"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Номер страницы",
+                                  "key": "page",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Размер страницы",
+                                  "key": "size",
+                                  "value": "20"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "5860",
+                                  "description": "ID продавца"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"content\": [\n    {\n      \"id\": 1,\n      \"sellerId\": 1,\n      \"amount\": 1422.2034930759175,\n      \"paymentType\": \"TRANSFER\",\n      \"transactionDate\": \"2007-12-03T10:15:30\"\n    },\n    {\n      \"id\": 1,\n      \"sellerId\": 1,\n      \"amount\": 3126.682755482668,\n      \"paymentType\": \"CARD\",\n      \"transactionDate\": \"2007-12-03T10:15:30\"\n    }\n  ],\n  \"page\": {\n    \"size\": 1123,\n    \"number\": 9456,\n    \"totalElements\": 9370,\n    \"totalPages\": 1860\n  }\n}"
+                        },
+                        {
+                          "name": "Ошибка валидации входных данных",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/seller/:id?page=0&size=20",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "seller",
+                                ":id"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Номер страницы",
+                                  "key": "page",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Размер страницы",
+                                  "key": "size",
+                                  "value": "20"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "id",
+                                  "value": "5860",
+                                  "description": "ID продавца"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "analytics",
+              "item": [
+                {
+                  "name": "top-seller",
+                  "item": [
+                    {
+                      "name": "Получить самого эффективного продавца",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/transactions/analytics/top-seller?startDate=2025-05-15T13:40:25&endDate=2026-05-17T15:11:49&page=0&size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "transactions",
+                            "analytics",
+                            "top-seller"
+                          ],
+                          "query": [
+                            {
+                              "description": "Начало диапазона",
+                              "key": "startDate",
+                              "value": "2025-05-15T13:40:25"
+                            },
+                            {
+                              "description": "Конец диапазона",
+                              "key": "endDate",
+                              "value": "2026-05-17T15:11:49"
+                            },
+                            {
+                              "description": "Номер страницы",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Размер страницы",
+                              "key": "size",
+                              "value": "20"
+                            }
+                          ]
+                        },
+                        "description": "Возвращает пагинированный список лучших продавцов за указанный период"
+                      },
+                      "response": [
+                        {
+                          "name": "Данные успешно получены",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/analytics/top-seller?startDate=2025-05-15T13:40:25&endDate=2026-05-17T15:11:49&page=0&size=20",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "analytics",
+                                "top-seller"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Начало диапазона",
+                                  "key": "startDate",
+                                  "value": "2025-05-15T13:40:25"
+                                },
+                                {
+                                  "description": "Конец диапазона",
+                                  "key": "endDate",
+                                  "value": "2026-05-17T15:11:49"
+                                },
+                                {
+                                  "description": "Номер страницы",
+                                  "key": "page",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Размер страницы",
+                                  "key": "size",
+                                  "value": "20"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"content\": [\n    {\n      \"sellerId\": 1,\n      \"sellerName\": \"Иван\",\n      \"totalAmount\": 7359.091515305334\n    },\n    {\n      \"sellerId\": 1,\n      \"sellerName\": \"Иван\",\n      \"totalAmount\": 9527.545429893853\n    }\n  ],\n  \"page\": {\n    \"size\": 4017,\n    \"number\": 8341,\n    \"totalElements\": 1146,\n    \"totalPages\": 2105\n  }\n}"
+                        },
+                        {
+                          "name": "Ошибка валидации входных данных",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/analytics/top-seller?startDate=2025-05-15T13:40:25&endDate=2026-05-17T15:11:49&page=0&size=20",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "analytics",
+                                "top-seller"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Начало диапазона",
+                                  "key": "startDate",
+                                  "value": "2025-05-15T13:40:25"
+                                },
+                                {
+                                  "description": "Конец диапазона",
+                                  "key": "endDate",
+                                  "value": "2026-05-17T15:11:49"
+                                },
+                                {
+                                  "description": "Номер страницы",
+                                  "key": "page",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Размер страницы",
+                                  "key": "size",
+                                  "value": "20"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                        },
+                        {
+                          "name": "За указанный период не было никаких транзакций",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/analytics/top-seller?startDate=2025-05-15T13:40:25&endDate=2026-05-17T15:11:49&page=0&size=20",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "analytics",
+                                "top-seller"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Начало диапазона",
+                                  "key": "startDate",
+                                  "value": "2025-05-15T13:40:25"
+                                },
+                                {
+                                  "description": "Конец диапазона",
+                                  "key": "endDate",
+                                  "value": "2026-05-17T15:11:49"
+                                },
+                                {
+                                  "description": "Номер страницы",
+                                  "key": "page",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Размер страницы",
+                                  "key": "size",
+                                  "value": "20"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "outsiders",
+                  "item": [
+                    {
+                      "name": "Получить список продавцов с суммой меньше указанной за выбранный период",
+                      "request": {
+                        "method": "GET",
+                        "header": [
+                          {
+                            "key": "Accept",
+                            "value": "*/*"
+                          }
+                        ],
+                        "url": {
+                          "raw": "{{baseUrl}}/api/transactions/analytics/outsiders?startDate=2025-05-15T13:40:25&endDate=2026-05-17T15:11:49&target=6767.67&page=0&size=20",
+                          "host": [
+                            "{{baseUrl}}"
+                          ],
+                          "path": [
+                            "api",
+                            "transactions",
+                            "analytics",
+                            "outsiders"
+                          ],
+                          "query": [
+                            {
+                              "description": "Начало диапазона",
+                              "key": "startDate",
+                              "value": "2025-05-15T13:40:25"
+                            },
+                            {
+                              "description": "Конец диапазона",
+                              "key": "endDate",
+                              "value": "2026-05-17T15:11:49"
+                            },
+                            {
+                              "description": "переданный параметр суммы",
+                              "key": "target",
+                              "value": "6767.67"
+                            },
+                            {
+                              "description": "Номер страницы",
+                              "key": "page",
+                              "value": "0"
+                            },
+                            {
+                              "description": "Размер страницы",
+                              "key": "size",
+                              "value": "20"
+                            }
+                          ]
+                        },
+                        "description": "Выводит пагинированный список продавцов, у которых сумма всех транзакций за выбранные период меньше переданного параметра суммы"
+                      },
+                      "response": [
+                        {
+                          "name": "Данные успешно получены",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/analytics/outsiders?startDate=2025-05-15T13:40:25&endDate=2026-05-17T15:11:49&target=6767.67&page=0&size=20",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "analytics",
+                                "outsiders"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Начало диапазона",
+                                  "key": "startDate",
+                                  "value": "2025-05-15T13:40:25"
+                                },
+                                {
+                                  "description": "Конец диапазона",
+                                  "key": "endDate",
+                                  "value": "2026-05-17T15:11:49"
+                                },
+                                {
+                                  "description": "переданный параметр суммы",
+                                  "key": "target",
+                                  "value": "6767.67"
+                                },
+                                {
+                                  "description": "Номер страницы",
+                                  "key": "page",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Размер страницы",
+                                  "key": "size",
+                                  "value": "20"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "OK",
+                          "code": 200,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"content\": [\n    {\n      \"sellerId\": 1,\n      \"sellerName\": \"Иван\",\n      \"totalAmount\": 7359.091515305334\n    },\n    {\n      \"sellerId\": 1,\n      \"sellerName\": \"Иван\",\n      \"totalAmount\": 9527.545429893853\n    }\n  ],\n  \"page\": {\n    \"size\": 4017,\n    \"number\": 8341,\n    \"totalElements\": 1146,\n    \"totalPages\": 2105\n  }\n}"
+                        },
+                        {
+                          "name": "Ошибка валидации входных данных",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/analytics/outsiders?startDate=2025-05-15T13:40:25&endDate=2026-05-17T15:11:49&target=6767.67&page=0&size=20",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "analytics",
+                                "outsiders"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Начало диапазона",
+                                  "key": "startDate",
+                                  "value": "2025-05-15T13:40:25"
+                                },
+                                {
+                                  "description": "Конец диапазона",
+                                  "key": "endDate",
+                                  "value": "2026-05-17T15:11:49"
+                                },
+                                {
+                                  "description": "переданный параметр суммы",
+                                  "key": "target",
+                                  "value": "6767.67"
+                                },
+                                {
+                                  "description": "Номер страницы",
+                                  "key": "page",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Размер страницы",
+                                  "key": "size",
+                                  "value": "20"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Bad Request",
+                          "code": 400,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                        },
+                        {
+                          "name": "За указанный период не было никаких транзакций",
+                          "originalRequest": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/analytics/outsiders?startDate=2025-05-15T13:40:25&endDate=2026-05-17T15:11:49&target=6767.67&page=0&size=20",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "analytics",
+                                "outsiders"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Начало диапазона",
+                                  "key": "startDate",
+                                  "value": "2025-05-15T13:40:25"
+                                },
+                                {
+                                  "description": "Конец диапазона",
+                                  "key": "endDate",
+                                  "value": "2026-05-17T15:11:49"
+                                },
+                                {
+                                  "description": "переданный параметр суммы",
+                                  "key": "target",
+                                  "value": "6767.67"
+                                },
+                                {
+                                  "description": "Номер страницы",
+                                  "key": "page",
+                                  "value": "0"
+                                },
+                                {
+                                  "description": "Размер страницы",
+                                  "key": "size",
+                                  "value": "20"
+                                }
+                              ]
+                            }
+                          },
+                          "status": "Not Found",
+                          "code": 404,
+                          "_postman_previewlanguage": "text",
+                          "header": [
+                            {
+                              "key": "Content-Type",
+                              "value": "*/*"
+                            }
+                          ],
+                          "cookie": [],
+                          "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                        }
+                      ]
+                    }
+                  ]
+                },
+                {
+                  "name": "best-period-seller",
+                  "item": [
+                    {
+                      "name": "{sellerId}",
+                      "item": [
+                        {
+                          "name": "Получить самое продуктивное время продавца",
+                          "request": {
+                            "method": "GET",
+                            "header": [
+                              {
+                                "key": "Accept",
+                                "value": "*/*"
+                              }
+                            ],
+                            "url": {
+                              "raw": "{{baseUrl}}/api/transactions/analytics/best-period-seller/:sellerId?days=30",
+                              "host": [
+                                "{{baseUrl}}"
+                              ],
+                              "path": [
+                                "api",
+                                "transactions",
+                                "analytics",
+                                "best-period-seller",
+                                ":sellerId"
+                              ],
+                              "query": [
+                                {
+                                  "description": "Искомый период времени",
+                                  "key": "days",
+                                  "value": "30"
+                                }
+                              ],
+                              "variable": [
+                                {
+                                  "key": "sellerId",
+                                  "value": "5860",
+                                  "description": "ID рассматриваемого продавца"
+                                }
+                              ]
+                            },
+                            "description": "Возвращает наилучший период времени продавца по количеству совершенных транзакций"
+                          },
+                          "response": [
+                            {
+                              "name": "Данные успешно получены",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/transactions/analytics/best-period-seller/:sellerId?days=30",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "transactions",
+                                    "analytics",
+                                    "best-period-seller",
+                                    ":sellerId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Искомый период времени",
+                                      "key": "days",
+                                      "value": "30"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sellerId",
+                                      "value": "5860",
+                                      "description": "ID рассматриваемого продавца"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "OK",
+                              "code": 200,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"startPeriod\": \"2003-03-21T02:46:55.030Z\",\n  \"endPeriod\": \"1959-08-21T17:13:01.496Z\",\n  \"count\": 7823\n}"
+                            },
+                            {
+                              "name": "Ошибка валидации входных данных",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/transactions/analytics/best-period-seller/:sellerId?days=30",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "transactions",
+                                    "analytics",
+                                    "best-period-seller",
+                                    ":sellerId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Искомый период времени",
+                                      "key": "days",
+                                      "value": "30"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sellerId",
+                                      "value": "5860",
+                                      "description": "ID рассматриваемого продавца"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Bad Request",
+                              "code": 400,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                            },
+                            {
+                              "name": "Искомого продавца не существует",
+                              "originalRequest": {
+                                "method": "GET",
+                                "header": [
+                                  {
+                                    "key": "Accept",
+                                    "value": "*/*"
+                                  }
+                                ],
+                                "url": {
+                                  "raw": "{{baseUrl}}/api/transactions/analytics/best-period-seller/:sellerId?days=30",
+                                  "host": [
+                                    "{{baseUrl}}"
+                                  ],
+                                  "path": [
+                                    "api",
+                                    "transactions",
+                                    "analytics",
+                                    "best-period-seller",
+                                    ":sellerId"
+                                  ],
+                                  "query": [
+                                    {
+                                      "description": "Искомый период времени",
+                                      "key": "days",
+                                      "value": "30"
+                                    }
+                                  ],
+                                  "variable": [
+                                    {
+                                      "key": "sellerId",
+                                      "value": "5860",
+                                      "description": "ID рассматриваемого продавца"
+                                    }
+                                  ]
+                                }
+                              },
+                              "status": "Not Found",
+                              "code": 404,
+                              "_postman_previewlanguage": "text",
+                              "header": [
+                                {
+                                  "key": "Content-Type",
+                                  "value": "*/*"
+                                }
+                              ],
+                              "cookie": [],
+                              "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                            }
+                          ]
+                        }
+                      ]
+                    }
+                  ]
+                }
+              ]
+            },
+            {
+              "name": "Получить список всех транзакций",
+              "request": {
+                "method": "GET",
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "url": {
+                  "raw": "{{baseUrl}}/api/transactions?page=0&size=20",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "transactions"
+                  ],
+                  "query": [
+                    {
+                      "description": "Номер страницы",
+                      "key": "page",
+                      "value": "0"
+                    },
+                    {
+                      "description": "Размер страницы",
+                      "key": "size",
+                      "value": "20"
+                    }
+                  ]
+                },
+                "description": "Возвращает пагинированный список транзакций"
+              },
+              "response": [
+                {
+                  "name": "Транзакции получены",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/transactions?page=0&size=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "transactions"
+                      ],
+                      "query": [
+                        {
+                          "description": "Номер страницы",
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Размер страницы",
+                          "key": "size",
+                          "value": "20"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "OK",
+                  "code": 200,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"content\": [\n    {\n      \"id\": 1,\n      \"sellerId\": 1,\n      \"amount\": 1422.2034930759175,\n      \"paymentType\": \"TRANSFER\",\n      \"transactionDate\": \"2007-12-03T10:15:30\"\n    },\n    {\n      \"id\": 1,\n      \"sellerId\": 1,\n      \"amount\": 3126.682755482668,\n      \"paymentType\": \"CARD\",\n      \"transactionDate\": \"2007-12-03T10:15:30\"\n    }\n  ],\n  \"page\": {\n    \"size\": 1123,\n    \"number\": 9456,\n    \"totalElements\": 9370,\n    \"totalPages\": 1860\n  }\n}"
+                },
+                {
+                  "name": "Переданы некорректные параметры запроса",
+                  "originalRequest": {
+                    "method": "GET",
+                    "header": [
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "url": {
+                      "raw": "{{baseUrl}}/api/transactions?page=0&size=20",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "transactions"
+                      ],
+                      "query": [
+                        {
+                          "description": "Номер страницы",
+                          "key": "page",
+                          "value": "0"
+                        },
+                        {
+                          "description": "Размер страницы",
+                          "key": "size",
+                          "value": "20"
+                        }
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                }
+              ]
+            },
+            {
+              "name": "Создать новую транзакцию",
+              "request": {
+                "method": "POST",
+                "header": [
+                  {
+                    "key": "Content-Type",
+                    "value": "application/json"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "*/*"
+                  }
+                ],
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"amount\": 9555.337833902808,\n  \"paymentType\": \"CARD\",\n  \"sellerId\": 1\n}",
+                  "options": {
+                    "raw": {
+                      "headerFamily": "json",
+                      "language": "json"
+                    }
+                  }
+                },
+                "url": {
+                  "raw": "{{baseUrl}}/api/transactions",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "path": [
+                    "api",
+                    "transactions"
+                  ]
+                }
+              },
+              "response": [
+                {
+                  "name": "Транзакция успешно создана",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": 9555.337833902808,\n  \"paymentType\": \"CARD\",\n  \"sellerId\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/transactions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "transactions"
+                      ]
+                    }
+                  },
+                  "status": "Created",
+                  "code": 201,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"id\": 1,\n  \"sellerId\": 1,\n  \"amount\": 3415.5653317156243,\n  \"paymentType\": \"CARD\",\n  \"transactionDate\": \"2007-12-03T10:15:30\"\n}"
+                },
+                {
+                  "name": "Ошибка валидации входных данных",
+                  "originalRequest": {
+                    "method": "POST",
+                    "header": [
+                      {
+                        "key": "Content-Type",
+                        "value": "application/json"
+                      },
+                      {
+                        "key": "Accept",
+                        "value": "*/*"
+                      }
+                    ],
+                    "body": {
+                      "mode": "raw",
+                      "raw": "{\n  \"amount\": 9555.337833902808,\n  \"paymentType\": \"CARD\",\n  \"sellerId\": 1\n}",
+                      "options": {
+                        "raw": {
+                          "headerFamily": "json",
+                          "language": "json"
+                        }
+                      }
+                    },
+                    "url": {
+                      "raw": "{{baseUrl}}/api/transactions",
+                      "host": [
+                        "{{baseUrl}}"
+                      ],
+                      "path": [
+                        "api",
+                        "transactions"
+                      ]
+                    }
+                  },
+                  "status": "Bad Request",
+                  "code": 400,
+                  "_postman_previewlanguage": "text",
+                  "header": [
+                    {
+                      "key": "Content-Type",
+                      "value": "*/*"
+                    }
+                  ],
+                  "cookie": [],
+                  "body": "{\n  \"time\": \"1954-09-03T04:33:57.191Z\",\n  \"status\": 404,\n  \"error\": \"Not Found\",\n  \"message\": \"У продавца с ID: 10 нет транзакций\"\n}"
+                }
+              ]
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ]
+}
