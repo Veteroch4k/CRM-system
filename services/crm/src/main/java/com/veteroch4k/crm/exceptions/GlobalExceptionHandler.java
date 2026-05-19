@@ -24,48 +24,44 @@ public class GlobalExceptionHandler {
   }
 
   //400
-  @ExceptionHandler(HandlerMethodValidationException.class)
-  public ResponseEntity<ErrorResponse> handleHandlerMethodValidationException(HandlerMethodValidationException e) {
+  @ExceptionHandler({
+      HandlerMethodValidationException.class,
+      MethodArgumentNotValidException.class,
+      IllegalArgumentException.class,
 
+  }
+  )
+  public ResponseEntity<ErrorResponse> handleBadRequest(Exception e) {
+
+    String errorMessage;
+
+    if (e instanceof HandlerMethodValidationException ex) {
+      errorMessage = ex.getAllErrors().getFirst().getDefaultMessage();
+    } else if (e instanceof MethodArgumentNotValidException ex) {
+      errorMessage = ex.getAllErrors().getFirst().getDefaultMessage();
+    } else {
+      errorMessage = e.getMessage();
+    }
 
     ErrorResponse errorResponse = new ErrorResponse(
         LocalDateTime.now(),
         HttpStatus.BAD_REQUEST.value(),
         HttpStatus.BAD_REQUEST.getReasonPhrase(),
-        e.getAllErrors().getFirst().getDefaultMessage()
+       errorMessage
     );
     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
   }
 
-  //400
-  @ExceptionHandler(MethodArgumentNotValidException.class)
-  public ResponseEntity<ErrorResponse> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
-
+  //500
+  @ExceptionHandler(Exception.class)
+  public ResponseEntity<ErrorResponse> handleException(Exception e) {
     ErrorResponse errorResponse = new ErrorResponse(
         LocalDateTime.now(),
-        HttpStatus.BAD_REQUEST.value(),
-        HttpStatus.BAD_REQUEST.getReasonPhrase(),
-        e.getAllErrors().getFirst().getDefaultMessage()
+        HttpStatus.INTERNAL_SERVER_ERROR.value(),
+        HttpStatus.INTERNAL_SERVER_ERROR.getReasonPhrase(),
+        "Произошла внутренняя ошибка сервера."
     );
-
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-
-  }
-
-  //400 c датами
-  @ExceptionHandler(IllegalArgumentException.class)
-  public ResponseEntity<ErrorResponse> handleIllegalArgumentException(IllegalArgumentException e) {
-
-    ErrorResponse errorResponse = new ErrorResponse(
-        LocalDateTime.now(),
-        HttpStatus.BAD_REQUEST.value(),
-        HttpStatus.BAD_REQUEST.getReasonPhrase(),
-        e.getMessage()
-    );
-
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(errorResponse);
-
-
+    return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorResponse);
   }
 
 
