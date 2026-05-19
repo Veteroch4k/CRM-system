@@ -33,6 +33,8 @@ CRM-system — это RESTful API, разработанное на базе Spri
 *   **Миграции БД** Liquibase
 *   **ORM** Hibernate 
 *   **Контейнеризация** Docker
+*   **Документация API** SpringDoc OpenAPI (Swagger)
+*   **Тестирование** Testcontainers и JUnit
 
 ## Установка и запуск
 Перед началом убедитесь, что у вас установлены:
@@ -50,6 +52,8 @@ CRM-system — это RESTful API, разработанное на базе Spri
    git clone https://github.com/Veteroch4k/CRM-system.git
    cd CRM-system/services/crm
    ```
+В конфиг-файле application.yaml у параметра sql.init.mode: never 
+поставьте always при первом запуске для заполнения таблицы тестовыми данными. После первого запуска верните обратно с always на never.
 
 2. **Соберите все модули:**
    ```bash
@@ -84,8 +88,19 @@ docker-compose stop <название_контейнера>
 ```
 ## Доступ к API
 ### 📚 Документация
+После успешного запуска приложения API-документация доступна по адресу:
+**[http://localhost:8080/swagger-ui.html](http://localhost:8080/swagger-ui.html)**
+
+Здесь вы найдете интерактивный интерфейс Swagger, который позволяет:
+* Изучить все доступные эндпоинты.
+* Посмотреть описание моделей данных (DTO, Entities).
+* Выполнять тестовые запросы к API прямо из браузера (кнопка "Try it out").
 
 ## Запуск тестов
+Проект имеет полное покрытие интеграционными и unit-тестами.
 
-
+Для запуска всех тестов выполните:
+  ```bash
+  ./gradlew test
+```
 
