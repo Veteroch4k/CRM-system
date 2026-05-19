@@ -41,4 +41,9 @@ public class Seller {
       example = "2007-12-03T10:15:30")
   private LocalDateTime registrationDate;
 
+  @Schema(description = "Флаг удалена ли запись",
+  allowableValues = {"true", "false"})
+  @Column(name = "is_deleted", nullable = false)
+  private boolean deleted;
+
 }

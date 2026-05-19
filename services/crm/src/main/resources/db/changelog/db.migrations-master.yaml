@@ -10,3 +10,9 @@ databaseChangeLog:
   - include:
       file: v1/create-chk-transactions-table.yaml
       relativeToChangelogFile: true
+
+# v2
+
+  - include:
+      file: v2/add-column-deleted-sellers-table.yaml
+      relativeToChangelogFile: true

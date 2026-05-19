@@ -63,10 +63,12 @@ public class SellerService {
   @Transactional
   public void deleteSeller(Long id) {
 
-    boolean exists = repository.existsById(id);
+    Seller seller = repository.findById(id)
+        .orElseThrow(() -> new ResourceNotFoundException("Продавец с ID: " + id + " не существует"));
 
-    if(exists)  repository.deleteById(id);
-    else throw new ResourceNotFoundException("Продавец с ID: " + id + " не существует");
+    seller.setDeleted(true);
+
+    repository.save(seller);
 
 
   }

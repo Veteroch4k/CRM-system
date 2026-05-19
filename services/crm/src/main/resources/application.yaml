@@ -16,5 +16,9 @@ spring:
     init:
       mode: never
 
+  jpa:
+    hibernate:
+      ddl-auto: validate
+
 server:
   port: 8080

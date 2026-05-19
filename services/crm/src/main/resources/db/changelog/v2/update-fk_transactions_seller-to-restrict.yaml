@@ -1,0 +1,16 @@
+databaseChangeLog:
+  - changeSet:
+      id: update-fk_transactions_seller-to-restrict
+      author: Veteroch4k
+      changes:
+        - dropForeignKeyConstraint:
+            baseTableName: transactions
+            constraintName: fk_transactions_seller
+
+        - addForeignKeyConstraint:
+            baseTableName: transactions
+            baseColumnNames: seller_id
+            referencedTableName: sellers
+            referencedColumnNames: id
+            constraintName: fk_transactions_seller
+            onDelete: RESTRICT

@@ -1,0 +1,14 @@
+databaseChangeLog:
+  - changeSet:
+      id: add-column-deleted-sellers-table
+      author: Veteroch4k
+      changes:
+        - addColumn:
+            tableName: sellers
+            columns:
+              - column:
+                  constraints:
+                    nullable: false
+                  defaultValueBoolean: false
+                  name: is_deleted
+                  type: BOOLEAN
