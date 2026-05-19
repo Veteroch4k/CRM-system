@@ -52,8 +52,11 @@ public class TransactionService {
 
   }
 
+  @Transactional
   public TransactionResponseDTO createTransaction(TransactionRequestDTO dto) {
-    
+
+    if(!sellerRepository.existsById(dto.sellerId())) throw new ResourceNotFoundException("Продавца с ID: " + dto.sellerId() + " не существует");
+
     Transaction t = new Transaction();
     t.setSeller(sellerRepository.getReferenceById(dto.sellerId()));
     t.setAmount(dto.amount());

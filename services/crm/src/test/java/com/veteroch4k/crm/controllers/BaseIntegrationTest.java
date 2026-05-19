@@ -1,4 +1,4 @@
-package com.veteroch4k.crm;
+package com.veteroch4k.crm.controllers;
 
 import io.restassured.RestAssured;
 import org.junit.jupiter.api.BeforeEach;
@@ -7,19 +7,19 @@ import org.springframework.boot.test.context.SpringBootTest.WebEnvironment;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.boot.testcontainers.service.connection.ServiceConnection;
 import org.testcontainers.containers.PostgreSQLContainer;
-import org.testcontainers.junit.jupiter.Container;
-import org.testcontainers.junit.jupiter.Testcontainers;
 
 @SpringBootTest(webEnvironment = WebEnvironment.RANDOM_PORT)
-@Testcontainers
 public abstract class BaseIntegrationTest {
 
   @LocalServerPort
   private Integer port;
 
-  @Container
   @ServiceConnection
   static PostgreSQLContainer<?> postgres = new PostgreSQLContainer<>("postgres:15-alpine");
+
+  static {
+    postgres.start();
+  }
 
   @BeforeEach
   void setUp() {

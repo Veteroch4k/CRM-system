@@ -2,7 +2,7 @@ package com.veteroch4k.crm.controllers.SellerControllerTest;
 
 import static io.restassured.RestAssured.given;
 import static org.hamcrest.Matchers.equalTo;
-import com.veteroch4k.crm.BaseIntegrationTest;
+import com.veteroch4k.crm.controllers.BaseIntegrationTest;
 import com.veteroch4k.crm.models.DTO.SellerDTO.SellerRequestDTO;
 import com.veteroch4k.crm.models.Seller;
 import com.veteroch4k.crm.repositories.SellerRepository;

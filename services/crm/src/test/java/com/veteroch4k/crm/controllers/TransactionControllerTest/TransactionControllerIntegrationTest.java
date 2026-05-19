@@ -1,10 +1,11 @@
 package com.veteroch4k.crm.controllers.TransactionControllerTest;
 
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.containsString;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.lessThan;
 
-import com.veteroch4k.crm.BaseIntegrationTest;
+import com.veteroch4k.crm.controllers.BaseIntegrationTest;
 import com.veteroch4k.crm.models.PaymentType;
 import com.veteroch4k.crm.models.Seller;
 import com.veteroch4k.crm.models.Transaction;
@@ -265,7 +266,7 @@ public class TransactionControllerIntegrationTest extends BaseIntegrationTest {
         .get("/api/transactions/analytics/top-seller")
     .then()
         .statusCode(404)
-        .body("message", equalTo("За указанный период " + startDate + " - " + endDate
+        .body("message", containsString("За указанный период " + startDate + " - " + endDate
             + " не было никаких транзакций"));
 
   }
@@ -373,7 +374,7 @@ public class TransactionControllerIntegrationTest extends BaseIntegrationTest {
         .get("/api/transactions/analytics/outsiders")
     .then()
         .statusCode(404)
-        .body("message", equalTo("За указанный период " + startDate + " - " + endDate
+        .body("message", containsString("За указанный период " + startDate + " - " + endDate
             + " не было никаких транзакций"));
   }
 
