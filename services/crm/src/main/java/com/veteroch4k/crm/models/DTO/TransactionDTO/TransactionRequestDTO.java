@@ -1,4 +1,4 @@
-package com.veteroch4k.crm.models.DTO;
+package com.veteroch4k.crm.models.DTO.TransactionDTO;
 
 import com.veteroch4k.crm.models.PaymentType;
 import io.swagger.v3.oas.annotations.media.Schema;

@@ -2,8 +2,8 @@ package com.veteroch4k.crm.controllers;
 
 import com.veteroch4k.crm.models.DTO.analytics.BestPeriodResult;
 import com.veteroch4k.crm.models.DTO.analytics.SellerProductivityDTO;
-import com.veteroch4k.crm.models.DTO.TransactionRequestDTO;
-import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
+import com.veteroch4k.crm.models.DTO.TransactionDTO.TransactionRequestDTO;
+import com.veteroch4k.crm.models.DTO.TransactionDTO.TransactionResponseDTO;
 import com.veteroch4k.crm.models.Transaction;
 import com.veteroch4k.crm.services.TransactionService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,10 +47,7 @@ public class TransactionController {
   description = "Возвращает пагинированный список транзакций")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Транзакции получены"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Переданы некорректные параметры запроса",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Переданы некорректные параметры запроса", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("")
@@ -70,15 +67,9 @@ public class TransactionController {
   description = "Возвращает транзакцию по её ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Транзакция получена"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Транзакции по заданному ID не существует",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "404", description = "Транзакции по заданному ID не существует", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("/{id}")
@@ -94,10 +85,7 @@ public class TransactionController {
   @Operation(summary = "Создать новую транзакцию")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Транзакция успешно создана"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
 
       )
   })
@@ -115,10 +103,7 @@ public class TransactionController {
   description = "Возвращает пагинированный список транзакций конкретного продавца по его ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Транзакции получены"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("/seller/{id}")
@@ -141,15 +126,9 @@ public class TransactionController {
   description = "Возвращает пагинированный список лучших продавцов за указанный период")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "За указанный период не было никаких транзакций",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "404", description = "За указанный период не было никаких транзакций", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("/analytics/top-seller")
@@ -176,15 +155,9 @@ public class TransactionController {
       + " меньше переданного параметра суммы")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "За указанный период не было никаких транзакций",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "404", description = "За указанный период не было никаких транзакций", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("/analytics/outsiders")
@@ -212,15 +185,9 @@ public class TransactionController {
   description = "Возвращает наилучший период времени продавца по количеству совершенных транзакций")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Данные успешно получены"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Искомого продавца не существует",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "404", description = "Искомого продавца не существует", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("/analytics/best-period-seller/{sellerId}")

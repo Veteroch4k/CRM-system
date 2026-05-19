@@ -1,7 +1,8 @@
 package com.veteroch4k.crm.controllers;
 
 import com.veteroch4k.crm.exceptions.ErrorResponse;
-import com.veteroch4k.crm.models.DTO.SellerDTO;
+import com.veteroch4k.crm.models.DTO.SellerDTO.SellerRequestDTO;
+import com.veteroch4k.crm.models.DTO.SellerDTO.SellerResponseDTO;
 import com.veteroch4k.crm.models.Seller;
 import com.veteroch4k.crm.services.SellerService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -15,11 +16,9 @@ import jakarta.validation.Valid;
 import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -43,14 +42,11 @@ public class SellerController {
   description = "Возвращает пагинированный список продавцов")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Продавцы получены"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Переданы некорректные параметры запроса",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Переданы некорректные параметры запроса", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("")
-  public ResponseEntity<Page<Seller>>  getSellers(
+  public ResponseEntity<Page<SellerResponseDTO>>  getSellers(
       @Parameter(description = "Номер страницы")
       @RequestParam(defaultValue = "0") @Min(0) int page,
       @Parameter(description = "Размер страницы")
@@ -63,19 +59,13 @@ public class SellerController {
       description = "Возвращает конкретном продавца по его ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "200", description = "Продавец получен"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Продавца по заданному ID не существует",
-          content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "404", description = "Продавца по заданному ID не существует", content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
       )
   })
   @GetMapping("/{id}")
-  public ResponseEntity<Seller> getSeller(
+  public ResponseEntity<SellerResponseDTO> getSeller(
       @Parameter(description = "ID продавца")
       @PathVariable("id") @Positive Long id) {
 
@@ -86,34 +76,24 @@ public class SellerController {
   @Operation(summary = "Создать нового продавца")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "201", description = "Продавец успешно создан"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
       )
   })
   @PostMapping("")
-  public ResponseEntity<Seller> createSeller(
+  public ResponseEntity<SellerResponseDTO> createSeller(
       @Parameter(description = "Данные для создания продавца")
-      @Valid @RequestBody SellerDTO sellerDTO) {
+      @Valid @RequestBody SellerRequestDTO sellerRequestDTO) {
 
-    return ResponseEntity.status(HttpStatus.CREATED).body(service.createSeller(sellerDTO));
-
+    return ResponseEntity.status(HttpStatus.CREATED).body(service.createSeller(sellerRequestDTO));
 
   }
 
   @Operation(summary = "Обновить инфо о продавце")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "204", description = "Продавец успшено обновлен"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
       ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Продавца с заданным ID не существует",
-          content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "404", description = "Продавца с заданным ID не существует", content = @Content (schema =  @Schema (implementation = ErrorResponse.class))
       )
   })
   @PutMapping("/{id}")
@@ -123,24 +103,18 @@ public class SellerController {
       @PathVariable("id") @Positive Long id,
 
       @Parameter(description = "Данные для обновления продавца")
-      @Valid @RequestBody SellerDTO sellerDTO
+      @Valid @RequestBody SellerRequestDTO sellerRequestDTO
 
   ) {
-     service.updateSeller(id, sellerDTO);
+     service.updateSeller(id, sellerRequestDTO);
   }
 
   @Operation(description = "Удаление продавца по его ID")
   @ApiResponses(value = {
       @ApiResponse(responseCode = "204", description = "Продавец успешно удалён"),
-      @ApiResponse(
-          responseCode = "400",
-          description = "Ошибка валидации входных данных",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "400", description = "Ошибка валидации входных данных", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       ),
-      @ApiResponse(
-          responseCode = "404",
-          description = "Продавец с заданным ID не существует",
-          content = @Content (schema = @Schema (implementation = ErrorResponse.class))
+      @ApiResponse(responseCode = "404", description = "Продавец с заданным ID не существует", content = @Content (schema = @Schema (implementation = ErrorResponse.class))
       )
   })
   @DeleteMapping("/{id}")

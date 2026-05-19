@@ -1,11 +1,11 @@
-package com.veteroch4k.crm.models.DTO;
+package com.veteroch4k.crm.models.DTO.SellerDTO;
 
 import io.swagger.v3.oas.annotations.media.Schema;
 import jakarta.validation.constraints.NotBlank;
 import org.hibernate.validator.constraints.Length;
 
 @Schema(description = "Данные для создания или обновления продавца")
-public record SellerDTO(
+public record SellerRequestDTO(
 
     @Schema(description = "Имя продавца", example = "Григорян")
     @NotBlank(message = "Имя продавца не может быть пустым")

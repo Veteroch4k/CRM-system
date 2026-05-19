@@ -11,7 +11,7 @@ import org.springframework.web.method.annotation.HandlerMethodValidationExceptio
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
-  //404 не существует записи
+  //404
   @ExceptionHandler(ResourceNotFoundException.class)
   public ResponseEntity<ErrorResponse> handleResourceNotFound(ResourceNotFoundException e) {
     ErrorResponse errorResponse = new ErrorResponse(

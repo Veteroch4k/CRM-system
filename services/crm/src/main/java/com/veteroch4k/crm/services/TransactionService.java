@@ -3,8 +3,8 @@ package com.veteroch4k.crm.services;
 import com.veteroch4k.crm.exceptions.ResourceNotFoundException;
 import com.veteroch4k.crm.models.DTO.analytics.BestPeriodResult;
 import com.veteroch4k.crm.models.DTO.analytics.SellerProductivityDTO;
-import com.veteroch4k.crm.models.DTO.TransactionRequestDTO;
-import com.veteroch4k.crm.models.DTO.TransactionResponseDTO;
+import com.veteroch4k.crm.models.DTO.TransactionDTO.TransactionRequestDTO;
+import com.veteroch4k.crm.models.DTO.TransactionDTO.TransactionResponseDTO;
 import com.veteroch4k.crm.models.Transaction;
 import com.veteroch4k.crm.repositories.SellerRepository;
 import com.veteroch4k.crm.repositories.TransactionRepository;
@@ -17,7 +17,6 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -43,7 +42,7 @@ public class TransactionService {
    * @param id айди транзакции
    * @return Возвращает сущность, а не её DTO, так как сама сущность Seller не хранит какой-то
    * важной/конфиденциальной информации. В идеале возвращать какую-нибудь DTO типа TransactionResponseWithSellerDTO,
-   * и создать SellerResponseDTO, хранящий только имя + контактную информацию. Но на данном этапе это избыточно.
+   *  но на данном этапе это избыточно.
    *
    */
   public Transaction getTransaction(Long id) {
